@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Definition of new Model -->
+
+<!-- The important part here is the name - Note: the use of the svt: namespace which is defined further on in the document -->
+<model name="svt:svthealthcaredocmodel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+	<!-- Optional meta-data about the model -->   
+	<description>Health Care Document Model</description>
+	<author>ShelvesTech DMS Team</author>
+	<version>1.0</version>
+
+	<!-- Imports are required to allow references to definitions in other models -->   
+	<imports>
+		<!-- Import Alfresco Dictionary Definitions -->
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+		<!-- Import Alfresco Content Domain Model Definitions -->
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+	</imports>
+
+	<!-- Introduction of new namespaces defined by this model -->
+	<namespaces>
+		<namespace uri="http://www.shelvestech.com/model/content/1.0" prefix="svt"/>
+	</namespaces>
+	
+	
+	<constraints>
+		<constraint name="svt:alphaNumericConstraint" type="REGEX">
+			<parameter name="expression"><value>[a-zA-Z0-9]*</value></parameter>
+			<parameter name="requiresMatch"><value>true</value></parameter>
+		</constraint>
+		<constraint name="svt:maxLengthOfSixConstraint" type="LENGTH">
+			<parameter name="minLength"><value>0</value></parameter>
+			<parameter name="maxLength"><value>6</value></parameter>
+		</constraint>
+		<constraint name="svt:maxLengthOfTwelveConstraint" type="LENGTH">
+			<parameter name="minLength"><value>0</value></parameter>
+			<parameter name="maxLength"><value>12</value></parameter>
+		</constraint>
+		<constraint name="svt:maxLengthOfOneTwentyEightConstraint" type="LENGTH">
+			<parameter name="minLength"><value>0</value></parameter>
+			<parameter name="maxLength"><value>128</value></parameter>
+		</constraint>
+		<constraint name="svt:modeOfPaymentConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>Cash</value>
+					<value>Cheque</value>
+					<value>Credit Card</value>
+					<value>Debit Card</value>
+					<value>Insurance</value>
+				</list>
+			</parameter>
+		</constraint>
+		<constraint name="svt:typeOfDiseaseConstraint" type="LIST">
+			<parameter name="allowedValues">
+				<list>
+					<value></value>
+					<value>Aesthetic and Reconstructive Surgery</value>
+					<value>Cardiology</value>
+					<value>Dental</value>
+					<value>ENT</value>
+					<value>Gastroenterology</value>
+					<value>Neurosciences</value>
+					<value>Oncology</value>
+					<value>Orthopaedics</value>
+					<value>Paediatric</value>
+				</list>
+			</parameter>
+		</constraint>
+	</constraints>
+  
+	<types>
+		<!--  Enterprise-wide generic document type -->
+		<type name="svt:hcdoc">
+			<title>Health Care Document</title>
+			<parent>cm:content</parent>
+			<properties>
+				<!-- Numerical Properties -->
+				<property name="svt:universalHealthcarId">
+					<title>Universal Healthcare ID</title>
+					<type>d:long</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:maxLengthOfTwelveConstraint" />
+					</constraints>
+				</property>
+				<property name="svt:insuranceClaimNumber">
+					<title>Insurance Claim Number</title>
+					<type>d:long</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:maxLengthOfTwelveConstraint" />
+					</constraints>
+				</property>
+			
+				<!-- Date Properties -->
+				<property name="svt:dateOfAdmission">
+					<title>Date of Admission</title>
+					<type>d:date</type>
+					<multiple>false</multiple>
+				</property>
+				<property name="svt:dateOfDischarge">
+					<title>Date of Discharge</title>
+					<type>d:date</type>
+					<multiple>false</multiple>
+				</property>
+
+				<!-- Text Properties -->
+				<property name="svt:treatingDoctor">
+					<title>Treating Doctor</title>
+					<type>d:text</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:maxLengthOfOneTwentyEightConstraint" />
+					</constraints>
+				</property>
+	
+				<!-- List Properties -->
+				<property name="svt:modeOfPayment">
+					<title>Mode of Payment</title>
+					<type>d:text</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:modeOfPaymentConstraint" />
+					</constraints>
+				</property>
+				<property name="svt:typeOfDisease">
+					<title>Type of Disease</title>
+					<type>d:text</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:typeOfDiseaseConstraint" />
+					</constraints>
+				</property>
+			
+				<!-- Physical Filing Properties -->
+				<property name="svt:barcodeNumber">
+					<title>Barcode Number</title>
+					<type>d:text</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:maxLengthOfTwelveConstraint" />
+						<constraint ref="svt:alphaNumericConstraint" />
+					</constraints>
+				</property>
+				<property name="svt:fileNumber">
+					<title>File Number</title>
+					<type>d:text</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:maxLengthOfSixConstraint" />
+						<constraint ref="svt:alphaNumericConstraint" />
+					</constraints>
+				</property>
+				<property name="svt:boxNumber">
+					<title>Box Number</title>
+					<type>d:text</type>
+					<multiple>false</multiple>
+					<constraints>
+						<constraint ref="svt:maxLengthOfSixConstraint" />
+						<constraint ref="svt:alphaNumericConstraint" />
+					</constraints>
+				</property>
+			</properties>
+			
+		</type>
+	</types>
+	
+</model>
